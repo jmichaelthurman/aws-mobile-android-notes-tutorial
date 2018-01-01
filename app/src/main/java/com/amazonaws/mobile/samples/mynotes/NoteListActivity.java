@@ -141,6 +141,14 @@ public class NoteListActivity
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
                 final NoteViewHolder noteHolder = (NoteViewHolder) viewHolder;
                 ((NotesAdapter) notesList.getAdapter()).remove(noteHolder);
+                // Send Custom Event to Amazon Pinpoint
+                final AnalyticsClient mgr = AWSProvider.getInstance()
+                        .getPinpointManager()
+                        .getAnalyticsClient();
+                final AnalyticsEvent evt = mgr.createEvent("DeleteNote")
+                        .withAttribute("noteId", noteHolder.getNote().getNoteId());
+                mgr.recordEvent(evt);
+                mgr.submitEvents();
             }
 
             @Override

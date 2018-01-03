@@ -7,11 +7,12 @@ package com.amazonaws.mobile.samples.mynotes;
 
         import android.content.Context;
 
-        import com.amazonaws.auth.AWSCredentialsProvider;
-        import com.amazonaws.mobile.auth.core.IdentityManager;
+import com.amazonaws.auth.AWSCredentialsProvider;
+import com.amazonaws.mobile.auth.core.IdentityManager;
+        import com.amazonaws.mobile.auth.userpools.CognitoUserPoolsSignInProvider;
         import com.amazonaws.mobile.config.AWSConfiguration;
-        import com.amazonaws.mobileconnectors.pinpoint.PinpointConfiguration;
-        import com.amazonaws.mobileconnectors.pinpoint.PinpointManager;
+import com.amazonaws.mobileconnectors.pinpoint.PinpointConfiguration;
+import com.amazonaws.mobileconnectors.pinpoint.PinpointManager;
 
 public class AWSProvider {
     private static AWSProvider instance = null;
@@ -35,6 +36,7 @@ public class AWSProvider {
 
         IdentityManager identityManager = new IdentityManager(context, awsConfiguration);
         IdentityManager.setDefaultIdentityManager(identityManager);
+        identityManager.addSignInProvider(CognitoUserPoolsSignInProvider.class);
     }
 
     public Context getContext() {
